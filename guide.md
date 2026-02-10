@@ -9,252 +9,267 @@
 1. [What is ArtifactKeep?](#what-is-artifactkeep)
 2. [Why Use ArtifactKeep?](#why-use-artifactkeep)
 3. [Getting Started](#getting-started)
-4. [Navigation & Layout](#navigation--layout)
-5. [Libraries & Views](#libraries--views)
+4. [Navigation and Layout](#navigation-and-layout)
+5. [Libraries and Views](#libraries-and-views)
    - [Image Prompts](#image-prompts)
    - [System Prompts](#system-prompts)
    - [Images](#images)
    - [Conversations](#conversations)
    - [Model Library](#model-library)
-   - [User Guide](#user-guide)
+   - [Help](#help)
    - [Settings](#settings)
-6. [Core Features & Workflows](#core-features--workflows)
-   - [Unified Folder System](#unified-folder-system)
+6. [Core Features and Workflows](#core-features-and-workflows)
+   - [Unified Folder Behavior](#unified-folder-behavior)
    - [Search, Filters, and View Modes](#search-filters-and-view-modes)
-   - [Bulk Actions + Undo Delete](#bulk-actions--undo-delete)
-   - [Prompt Export + Import (Backup + Template)](#prompt-export--import-backup--template)
-   - [Image Metadata Extraction (PNG)](#image-metadata-extraction-png)
-   - [Auto-Created Prompts from Images](#auto-created-prompts-from-images)
+   - [Bulk Actions and Undo Delete](#bulk-actions-and-undo-delete)
+   - [Prompt Export and Import](#prompt-export-and-import)
+   - [Image Metadata and Prompt Creation](#image-metadata-and-prompt-creation)
    - [Linked Image Folders](#linked-image-folders)
-   - [Performance & Scalability](#performance--scalability)
+   - [Performance and Scalability](#performance-and-scalability)
 7. [Keyboard Shortcuts](#keyboard-shortcuts)
-8. [Data Storage & Privacy](#data-storage--privacy)
+8. [Data Storage and Privacy](#data-storage-and-privacy)
 9. [Technical Architecture](#technical-architecture)
 
 ---
 
 ## What is ArtifactKeep?
 
-ArtifactKeep is a **local-first desktop application** built with [Tauri](https://tauri.app/) that helps you organize and reuse AI assets: prompts, image generations, LLM conversations, and model files. Everything runs **entirely on your machine**. No cloud, no telemetry, no subscriptions.
+ArtifactKeep is a local-first desktop application built with [Tauri](https://tauri.app/) that helps you organize and reuse AI assets: prompts, generated images, conversation files, and local model indexes.
 
-**Current Version**: 2.0.4
+Everything runs on your machine. Data is stored in local files and folders.
+
+**Current Version**: 2.0.5
 
 ---
 
 ## Why Use ArtifactKeep?
 
-### 🎯 Centralized Asset Management
+### Centralized Asset Management
 
-One place for image prompts, system prompts, images with metadata, conversations, and local model indexes.
+Manage image prompts, system prompts, images with metadata, conversations, and model references in one app.
 
-### 🔒 100% Local & Private
+### Local and Private
 
-All data is stored in local JSON files and folders on your machine. Nothing leaves your computer.
+Data is stored in local JSON files and folders in your app data directory.
 
-### ⚡ Built for Large Libraries
+### Built for Large Libraries
 
-Virtualized lists, windowed rendering, and lazy loading help the UI stay fast with thousands of entries.
+Windowed rendering, lazy loading, and background processing help maintain responsiveness with large datasets.
 
-### 🧰 Metadata-Aware Workflows
+### Metadata-Aware Workflows
 
-Extract ComfyUI and Automatic1111-style metadata from PNGs and turn it into reusable prompts.
+Import PNG files, extract generation metadata, and turn that metadata into reusable prompt cards.
 
-### 💻 Cross-Platform
+### Cross-Platform
 
-Available for macOS, Windows, and Linux.
+ArtifactKeep is built with Tauri and targets macOS, Windows, and Linux.
 
 ---
 
 ## Getting Started
 
-1. **Install & Launch**: Run the latest build for your OS.
-2. **First Run**: ArtifactKeep creates its data directory in your system application support folder.
-3. **Explore**: Each library view includes a Welcome Card to orient you.
-4. **Build Your Library**:
+1. Install and launch ArtifactKeep.
+2. On first run, ArtifactKeep creates required data files in your app data directory.
+3. Open each library from the sidebar and use the welcome cards for orientation.
+4. Start building your library:
    - Create prompts and tags.
-   - Import PNGs.
+   - Import PNG images.
    - Import conversation files.
-   - Link model folders to scan.
+   - Add model folders for indexing.
 
 ---
 
-## Navigation & Layout
+## Navigation and Layout
 
-- **Sidebar**: Persistent navigation between libraries and settings.
-- **Folder Subnav**: Each library shows folders under its nav entry.
-- **Card/List Views**: Most libraries support both view modes.
-- **Sticky Headers**: Search, filters, and actions stay visible while you scroll.
-- **Folder Detail Headers**: Folder name, count, and quick actions appear when inside a folder.
+- **Sidebar**: Navigate between libraries, Help, and Settings.
+- **Folder Subnav**: Library folders appear under sidebar entries for quick navigation.
+- **Sticky Headers**: Search, filters, and actions stay visible while scrolling.
+- **Folder Detail Headers**: In-folder mode shows folder name, item count, and folder-level actions.
+- **View Modes**: Card/list toggles are available where supported.
 
 ---
 
-## Libraries & Views
+## Libraries and Views
 
 ### Image Prompts
 
 Store and organize prompts for image generation.
 
-- **Prompt Editor**: Positive/negative prompts, notes, base models, LoRAs, and tags.
-- **Live Stats**: Word, character, and token estimates on prompts.
-- **Title Tools**: Local title generator from prompt text.
-- **Organization**: Drag-and-drop, folders, bulk move, card/list views.
-- **Filters**: Base models, LoRAs, tags, and "Has Negative Prompt".
-- **Bulk Actions**: Copy, duplicate, move, export, delete.
-- **Export Modal**: Choose either:
-  - **Back up for this app (JSON)** for restore/merge workflows.
-  - **Export files to use elsewhere** for Markdown/Text/CSV (single file or ZIP).
-- **Favorites**: Star frequently used prompts.
-- **Import**: JSON import with templates and preflight validation.
-  - Backup JSON supports safe merge (skip existing IDs, keep-first duplicate IDs, generate ID if missing).
-  - Backup import restores as unfiled (stored `folderId` is ignored).
+- Prompt editor supports positive prompt, negative prompt, notes, base models, LoRAs, and tags.
+- Live stats show characters, words, and an estimated token count.
+- Auto title generation uses a local title generator.
+- Favorites are pinned to the top.
+- Supports folders, drag and drop, search, filters, and card/list modes.
+- Filters include base models, LoRAs, tags, and "Has Negative Prompt".
+- Bulk actions include copy, duplicate, move, export, and delete.
+- Import supports JSON templates and app backup JSON with preflight validation.
+- Export uses a guided flow:
+  - Backup JSON for restore/merge in ArtifactKeep.
+  - Portable Markdown/Text/CSV files for outside use.
 
 ### System Prompts
 
-Manage system instructions and persona prompts.
+Manage reusable system instructions and personas.
 
-- **LLM Targeting**: Tag prompts for specific models (e.g., GPT-4, Llama 3).
-- **Profile Image + Gallery**: Attach a profile image and reference gallery.
-- **Organization**: Drag-and-drop, folders, bulk move, card/list views.
-- **Filters**: LLM models and tags.
-- **Bulk Actions**: Copy, duplicate, move, export, delete.
-- **Export Modal**: Same backup-vs-portable flow as Image Prompts, plus formatting options for Markdown/Text:
+- Prompt editor supports prompt text, notes, LLM models, and tags.
+- Supports profile image and multi-image gallery references.
+- Favorites are pinned to the top.
+- Supports folders, drag and drop, search, filters, and card/list modes.
+- Filters include LLM models and tags.
+- Bulk actions include copy, duplicate, move, export, and delete.
+- Import supports:
+  - JSON templates and backup JSON.
+  - Markdown files (`.md`, `.markdown`) as prompt bodies.
+- Export supports backup JSON and portable files, with system-specific formatting:
   - Body only
   - Title + body
   - Metadata header + body
-- **Favorites**: Pin important prompts.
-- **Import**: JSON and Markdown import with templates and preflight validation.
-  - Backup type mismatch is blocked (image backup cannot import into system prompts, and vice versa).
-  - Missing media references in backup imports are stripped with a warning toast.
 
 ### Images
 
-A searchable gallery for AI-generated PNGs with extracted metadata.
+A gallery for imported images and extracted metadata.
 
-- **PNG Import**: Drag-and-drop or browse.
-- **Linked Folders**: Auto-scan a folder for new PNGs and import them.
-- **Linked Rescans**: Re-scan a linked folder to pick up new files, then refresh metadata in one pass.
-- **Metadata Viewer**: Prompts, models, settings, and raw metadata.
-- **Detail Actions**: Click an image to open the detail modal and copy prompt blocks or create a prompt from metadata.
-- **Search Scopes**: Everything, prompts, models, or filename.
-- **Filters**: Model, tool (ComfyUI/A1111), and prompt status.
-- **Rescan Settings**: Toggle whether top-level metadata rescans create prompts (Images toolbar → Rescan Settings).
-- **Utilities**: Rescan metadata, regenerate thumbnails, bulk move/delete.
-- **Favorites**: Star top images.
-- **Auto Prompt Creation**: Optional prompt creation from metadata on import or rescan.
+- Image library import is PNG-focused (`.png`).
+- Import modal can optionally create image prompts from imported image metadata.
+- Supports standard folders and linked folders.
+- Linked folders can scan for new PNG files and import only unseen files.
+- Search scopes: Everything, Prompt, Model, Filename.
+- Filters include models, tool hints, and prompt-status flags.
+- Detail modal shows:
+  - File info
+  - Prompts
+  - Models
+  - Generation settings
+  - Raw metadata
+- Detail modal actions include copying prompt blocks and creating an image prompt from metadata.
+- Utilities include metadata rescan and thumbnail regeneration.
+- Rescan settings include a top-level toggle for prompt creation on rescan.
+- Bulk actions include move and delete.
+- Favorites and quick copy-positive-prompt actions are supported.
 
 ### Conversations
 
-Archive exported chat logs from LLM interfaces.
+Archive exported chat logs from LLM tools.
 
-- **Supported Formats**: `.json`, `.txt`, `.md`, `.markdown`, `.log`, `.yaml`, `.yml`, `.html`.
-- **Metadata Editor**: Title, notes, LLM models, and tags.
-- **Preview + Raw View**: Markdown/text preview with full raw file view for large files.
-- **Export Original**: Export a single file from the detail modal or bulk export selected conversations to a folder.
-- **Organization**: Drag-and-drop, folders, bulk move, card/list views.
-- **Filters**: LLM models and tags.
-- **Favorites**: Pin important conversations.
+- Supported import formats: `.json`, `.txt`, `.md`, `.markdown`, `.log`, `.yaml`, `.yml`, `.html`.
+- Detail modal supports editing title, notes, LLM models, and tags.
+- Markdown and text files show formatted preview in the detail modal.
+- Other formats use raw preview, with load-more behavior for large files.
+- Export original file from the detail modal.
+- Bulk export selected conversations to a chosen folder.
+- Supports folders, drag and drop, search, filters, and card/list modes.
+- Filters include LLM models and tags.
+- Favorites are pinned to the top.
 
 ### Model Library
 
-Index and organize model files without moving them.
+Index and organize local model files without moving them.
 
-- **Folder Scanning**: Scan folders for `.safetensors`, `.ckpt`, `.pt`, `.gguf`.
-- **Type Detection**: Auto-categorize by extension or folder path keywords (LoRAs, Checkpoints, UNet, VAE, Embeddings, LLM, Other).
-- **Status Tracking**: Folder status (linked/scanning/unavailable) and missing entries.
-- **Relink & Refresh**: Update paths and rescan without losing metadata.
-- **Entry Details**: Tags, notes, file size, last modified, copy-path.
-- **Search + Filters**: By name/path, type, and missing status.
-- **Bulk Actions**: Remove multiple folders or entries at once (index only).
+- Add model folders and scan for: `.safetensors`, `.ckpt`, `.pt`, `.gguf`.
+- Folder settings include category and include-subfolders option.
+- Type categories: Auto, LoRAs, Checkpoints, UNet, VAE, Embeddings, LLM, Other.
+- Folder status tracks linked/scanning/unavailable states.
+- Missing entries are tracked and can be shown with a folder-level toggle.
+- Relink workflow supports smart matching to preserve existing metadata when paths change.
+- Entry details include type, tags, notes, file size, modified date, and copy-path.
+- Supports folder/entry card and list modes, search, filtering, and bulk delete.
+- Deleting folders or entries removes index records only, not the original files on disk.
 
-### User Guide
+### Help
 
-In-app Markdown guide loaded from `assets/guide.md`.
+The Help page includes:
+
+- An **Open User Guide** button that loads this guide in-app.
+- A feedback email action (copy to clipboard).
+- A support link (Ko-fi).
 
 ### Settings
 
-- **Theme**: Light/dark toggle.
-- **Autocomplete Lists**: Base models, LoRAs, and LLM models.
-- **Welcome Cards**: Reset onboarding tips for all views.
+Settings includes:
+
+- Theme toggle (light/dark).
+- Image prompt model lists (base models and LoRAs).
+- System prompt model list (LLM models).
+- Reset welcome cards for all views.
+- About card with current app version.
 
 ---
 
-## Core Features & Workflows
+## Core Features and Workflows
 
-### Unified Folder System
+### Unified Folder Behavior
 
-- Shared folder behavior across prompts, images, conversations, and models.
-- Mixed view: folders and top-level items coexist.
-- Drag items into folders to organize quickly.
-- Folder actions include create, rename, delete (with safety checks).
+- Image Prompts, System Prompts, Images, Conversations, and Model Library all support folder organization.
+- Root view can show unfiled items and folders together.
+- Drag and drop supports moving selected items into folders (where supported).
+- Sidebar folder subnav provides quick jump into specific folders.
 
 ### Search, Filters, and View Modes
 
-- Every library includes search.
-- Filters are tailored per library:
-  - Prompts: models, tags, LoRAs, negative prompt presence.
-  - Images: tools, models, prompt status, scope-based search.
-  - Conversations: models and tags.
-  - Models: type and missing status.
-- Card/list view toggles where available.
+- Each library has search.
+- Filters are library-specific:
+  - Image Prompts: base models, LoRAs, tags, negative prompt flag.
+  - System Prompts: LLM models and tags.
+  - Images: models, tools, prompt status, plus search scopes.
+  - Conversations: LLM models and tags.
+  - Model Library: type and missing status (inside folder detail).
+- Card/list mode toggles are available in prompt, conversation, and model views.
 
-### Bulk Actions + Undo Delete
+### Bulk Actions and Undo Delete
 
-- Multi-select with checkboxes or `Shift + Click`.
-- Bulk copy/duplicate/export/move/delete (varies by view).
-- Undo delete is available for a short window (global delete manager).
+- Multi-select supports checkbox selection and shift-click ranges.
+- Bulk actions vary by library (move, export, delete, and more where applicable).
+- Delete flows use an undo window when available.
 
-### Prompt Export + Import (Backup + Template)
+### Prompt Export and Import
 
-- Prompt libraries now use a guided export modal:
-  - **Intent**: backup JSON vs portable files
-  - **Format**: Markdown/Text/CSV (portable path)
-  - **Organization**: single file or separate files (ZIP)
-  - **System formatting step** for Markdown/Text exports
-- JSON is reserved for app backup/restore:
-  - Backup exports include `version`, `exportedAt`, `type`, and `items`.
-  - Import accepts unknown fields for forward/backward compatibility.
-  - Backup `type` mismatch is hard-blocked.
-- Backup import conflict behavior:
-  - Existing IDs are skipped (no overwrite).
-  - Duplicate IDs inside the same import keep the first item and skip later ones.
-  - Missing IDs are generated on import.
-  - `folderId` is ignored for backup restore (items import unfiled).
-- Template import behavior remains available:
-  - Template items are normalized and imported with new IDs.
-  - JSON templates are supported for image prompts.
-  - JSON + Markdown templates are supported for system prompts.
-- Portable export rules:
+Prompt libraries use a guided export/import workflow.
+
+- **Backup JSON**:
+  - Includes `version`, `exportedAt`, `type`, and `items`.
+  - Intended for ArtifactKeep restore/merge.
+  - Backup type mismatch is blocked.
+- **Portable Export**:
+  - Markdown/Text/CSV output.
+  - Markdown/Text can be single-file or ZIP of separate files.
   - CSV is single-file only.
-  - Markdown/Text can export as single file or ZIP of separate files.
-  - ZIP entries use sanitized prompt names with numeric prefixes (`001-name.md`).
-  - Single-item single-file exports default to the sanitized prompt name.
-- Import preflight:
-  - Shows valid/invalid counts, unknown-field counts, and file errors.
-  - Shows notices for ID conflicts/duplicates before confirming import.
+- **Import Preflight**:
+  - Shows total/valid/invalid counts.
+  - Shows missing prompt and unknown-field counts.
+  - Lists validation issues before confirmation.
+- **Backup conflict handling**:
+  - Existing IDs are skipped.
+  - Duplicate IDs within the import keep the first occurrence.
+  - Missing IDs are generated.
+  - `folderId` from backups is not restored (backup items import unfiled).
+- **System prompt backup media handling**:
+  - Missing image/gallery references are removed during import.
 
-### Image Metadata Extraction (PNG)
+### Image Metadata and Prompt Creation
 
-- Optimized for PNGs.
-- Supports ComfyUI and Automatic1111-style metadata.
-- Raw metadata is available in the image detail modal.
-- Large metadata payloads are externalized to `/raw` JSON files.
-
-### Auto-Created Prompts from Images
-
-- Image imports or rescans can generate prompt cards automatically.
-- Prompt fingerprints prevent duplicate creation.
-- Optional per-folder toggle and top-level rescan setting.
+- Metadata extraction is optimized for PNG metadata chunks.
+- Tool hint detection includes ComfyUI and A1111-style metadata patterns.
+- Image prompt creation from metadata is available through:
+  - Import option toggle
+  - Linked-folder import setting
+  - Metadata rescans (folder and top-level settings)
+  - Image detail modal "Create Prompt From Image"
+- Prompt fingerprinting is used to skip duplicates.
+- Auto-created prompts can receive a local generated title.
 
 ### Linked Image Folders
 
-- Link a folder to scan for new PNGs.
-- New files are imported into the library and deduped by source metadata.
-- Linked folders can also auto-create prompts from new images.
+- Linked folders point to a local directory and scan for new PNG files.
+- Scan dedupe uses source path + source modified time + source file size.
+- Linked folders support per-folder auto-create-prompt behavior.
+- Folder-level rescan metadata action can scan linked folder content and then refresh metadata.
 
-### Performance & Scalability
+### Performance and Scalability
 
-- Windowed rendering and lazy loading across large libraries.
-- Background metadata extraction and thumbnail generation.
+- Windowed rendering with incremental loading for large lists.
+- Lazy thumbnail loading in image grids.
+- Background thumbnail generation and metadata extraction.
+- Debounced write queue for JSON persistence.
 
 ---
 
@@ -262,17 +277,17 @@ In-app Markdown guide loaded from `assets/guide.md`.
 
 | Context | Shortcut | Action |
 |---------|----------|--------|
-| General | `Esc` | Close modal / clear selection |
-| Editors | `Cmd/Ctrl + Enter` | Save & close |
-| Lists | `Shift + Click` | Range selection |
+| Modals | `Esc` | Close open modal |
+| Prompt / Conversation modals | `Cmd/Ctrl + Enter` | Save |
+| Selectable lists | `Shift + Click` | Range selection |
 
 ---
 
-## Data Storage & Privacy
+## Data Storage and Privacy
 
 ### Location
 
-All data is stored locally:
+ArtifactKeep stores data in your local app data directory.
 
 - **macOS**: `~/Library/Application Support/com.artifactkeep.app/`
 - **Windows**: `%APPDATA%\\com.artifactkeep.app\\`
@@ -280,31 +295,38 @@ All data is stored locally:
 
 ### File Structure
 
-- `image-prompts.json`, `system-prompts.json`
-- `images.json`, `conversations.json`, `models-library.json`
-- `image-models.json`, `llm-models.json`
-- `image-tags.json`, `system-tags.json`, `conversation-tags.json`
-- `settings.json`
-- `images/`: imported image files
-- `thumbnails/`: generated thumbnails
-- `raw/`: large raw metadata blobs
-- `conversations/original/`: conversation source files
-- `system-prompt-images/`: system prompt profile images
-- `system-prompt-gallery/`: system prompt gallery images
+Core JSON files:
 
-**Backups**: Copy or zip this directory to back up your entire library.
+- `image-prompts.json`
+- `system-prompts.json`
+- `images.json`
+- `conversations.json`
+- `models-library.json`
+- `image-models.json`
+- `llm-models.json`
+- `image-tags.json`
+- `system-tags.json`
+- `conversation-tags.json`
+- `settings.json`
+
+Asset folders:
+
+- `images/` imported images
+- `thumbnails/` generated thumbnails
+- `raw/` externalized large raw metadata blobs
+- `conversations/original/` imported conversation source files
+- `system-prompt-images/` system prompt profile images
+- `system-prompt-gallery/` system prompt gallery images
+
+To back up everything, copy or zip the full app data directory.
 
 ---
 
 ## Technical Architecture
 
-ArtifactKeep is a hybrid desktop app:
+ArtifactKeep is a Tauri desktop app with a JavaScript frontend and Rust backend.
 
-- **Frontend**: Vanilla ES modules and modular CSS (no framework).
-- **Backend**: Rust (Tauri v2) for file I/O, image metadata extraction, thumbnail generation, and folder scanning.
-- **Data Layer**: JSON schema validation, auto-repair, and a debounced write queue (`src/data.js`).
-- **Shared Patterns**: Selection manager, filter manager, drag/selection utilities, reusable modals.
-
----
-
-*ArtifactKeep — Your machine, your rules.*
+- **Frontend**: Vanilla ES modules and modular CSS.
+- **Backend (Rust)**: File I/O, folder scanning, metadata extraction, thumbnail generation, and title generation.
+- **Data Layer**: JSON schema validation/repair plus debounced persistence via write queue (`src/data.js`).
+- **Shared Utilities**: Selection manager, filter manager, drag manager, reusable modals, import/export helpers.
