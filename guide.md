@@ -22,7 +22,7 @@
    - [Unified Folder System](#unified-folder-system)
    - [Search, Filters, and View Modes](#search-filters-and-view-modes)
    - [Bulk Actions + Undo Delete](#bulk-actions--undo-delete)
-   - [Prompt Import Templates + Validation](#prompt-import-templates--validation)
+   - [Prompt Export + Import (Backup + Template)](#prompt-export--import-backup--template)
    - [Image Metadata Extraction (PNG)](#image-metadata-extraction-png)
    - [Auto-Created Prompts from Images](#auto-created-prompts-from-images)
    - [Linked Image Folders](#linked-image-folders)
@@ -37,7 +37,7 @@
 
 ArtifactKeep is a **local-first desktop application** built with [Tauri](https://tauri.app/) that helps you organize and reuse AI assets: prompts, image generations, LLM conversations, and model files. Everything runs **entirely on your machine**. No cloud, no telemetry, no subscriptions.
 
-**Current Version**: 2.0.3
+**Current Version**: 2.0.4
 
 ---
 
@@ -99,9 +99,14 @@ Store and organize prompts for image generation.
 - **Title Tools**: Local title generator from prompt text.
 - **Organization**: Drag-and-drop, folders, bulk move, card/list views.
 - **Filters**: Base models, LoRAs, tags, and "Has Negative Prompt".
-- **Bulk Actions**: Copy, duplicate, export (JSON/Markdown/CSV/TXT), delete.
+- **Bulk Actions**: Copy, duplicate, move, export, delete.
+- **Export Modal**: Choose either:
+  - **Back up for this app (JSON)** for restore/merge workflows.
+  - **Export files to use elsewhere** for Markdown/Text/CSV (single file or ZIP).
 - **Favorites**: Star frequently used prompts.
 - **Import**: JSON import with templates and preflight validation.
+  - Backup JSON supports safe merge (skip existing IDs, keep-first duplicate IDs, generate ID if missing).
+  - Backup import restores as unfiled (stored `folderId` is ignored).
 
 ### System Prompts
 
@@ -111,9 +116,15 @@ Manage system instructions and persona prompts.
 - **Profile Image + Gallery**: Attach a profile image and reference gallery.
 - **Organization**: Drag-and-drop, folders, bulk move, card/list views.
 - **Filters**: LLM models and tags.
-- **Bulk Actions**: Copy, duplicate, export (JSON/Markdown/CSV/TXT), delete.
+- **Bulk Actions**: Copy, duplicate, move, export, delete.
+- **Export Modal**: Same backup-vs-portable flow as Image Prompts, plus formatting options for Markdown/Text:
+  - Body only
+  - Title + body
+  - Metadata header + body
 - **Favorites**: Pin important prompts.
-- **Import**: JSON import with templates and preflight validation.
+- **Import**: JSON and Markdown import with templates and preflight validation.
+  - Backup type mismatch is blocked (image backup cannot import into system prompts, and vice versa).
+  - Missing media references in backup imports are stripped with a warning toast.
 
 ### Images
 
@@ -192,11 +203,34 @@ In-app Markdown guide loaded from `assets/guide.md`.
 - Bulk copy/duplicate/export/move/delete (varies by view).
 - Undo delete is available for a short window (global delete manager).
 
-### Prompt Import Templates + Validation
+### Prompt Export + Import (Backup + Template)
 
-- JSON import for image/system prompts.
-- Preflight modal lists invalid entries and reasons.
-- Templates can be downloaded directly in the import modal.
+- Prompt libraries now use a guided export modal:
+  - **Intent**: backup JSON vs portable files
+  - **Format**: Markdown/Text/CSV (portable path)
+  - **Organization**: single file or separate files (ZIP)
+  - **System formatting step** for Markdown/Text exports
+- JSON is reserved for app backup/restore:
+  - Backup exports include `version`, `exportedAt`, `type`, and `items`.
+  - Import accepts unknown fields for forward/backward compatibility.
+  - Backup `type` mismatch is hard-blocked.
+- Backup import conflict behavior:
+  - Existing IDs are skipped (no overwrite).
+  - Duplicate IDs inside the same import keep the first item and skip later ones.
+  - Missing IDs are generated on import.
+  - `folderId` is ignored for backup restore (items import unfiled).
+- Template import behavior remains available:
+  - Template items are normalized and imported with new IDs.
+  - JSON templates are supported for image prompts.
+  - JSON + Markdown templates are supported for system prompts.
+- Portable export rules:
+  - CSV is single-file only.
+  - Markdown/Text can export as single file or ZIP of separate files.
+  - ZIP entries use sanitized prompt names with numeric prefixes (`001-name.md`).
+  - Single-item single-file exports default to the sanitized prompt name.
+- Import preflight:
+  - Shows valid/invalid counts, unknown-field counts, and file errors.
+  - Shows notices for ID conflicts/duplicates before confirming import.
 
 ### Image Metadata Extraction (PNG)
 
