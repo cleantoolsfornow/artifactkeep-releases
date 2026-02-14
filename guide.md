@@ -233,6 +233,21 @@ Prompt libraries use a guided export/import workflow.
   - Markdown/Text/CSV output.
   - Markdown/Text can be single-file or ZIP of separate files.
   - CSV is single-file only.
+- **Default filename patterns**:
+  - Timestamp format: `YYYY-MM-DD-HHmm`
+  - Backup JSON (single prompt): `<prompt-slug-or-untitled>-1-backup-YYYY-MM-DD-HHmm.json`
+  - Backup JSON (multi prompt): `<library>-<count>-backup-YYYY-MM-DD-HHmm.json`
+  - Portable single-file (single prompt): `<prompt-slug-or-untitled>-1-portable-YYYY-MM-DD-HHmm.<md|txt|csv>`
+  - Portable single-file (multi prompt): `<library>-<count>-portable-YYYY-MM-DD-HHmm.<md|txt|csv>`
+  - Portable ZIP (separate files): `<library>-<count>-portable-YYYY-MM-DD-HHmm.zip`
+  - ZIP entry names: `001-<prompt-slug>.<ext>`, `002-...` (with collision suffixes like `-2`, `-3` when needed)
+  - Examples:
+    - `direct-answer-with-next-step-1-backup-2026-02-14-0905.json`
+    - `system-prompts-3-backup-2026-02-14-0905.json`
+    - `q-a-prompt-growth-v2-1-portable-2026-02-14-0905.md`
+    - `image-prompts-4-portable-2026-02-14-0905.csv`
+    - `system-prompts-6-portable-2026-02-14-0905.zip`
+    - ZIP contents: `001-direct-answer.md`, `002-untitled.md`, `003-direct-answer-2.md`
 - **Import Preflight**:
   - Shows total/valid/invalid counts.
   - Shows missing prompt and unknown-field counts.
