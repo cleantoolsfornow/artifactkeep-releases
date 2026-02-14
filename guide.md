@@ -38,7 +38,7 @@ ArtifactKeep is a local-first desktop application built with [Tauri](https://tau
 
 Everything runs on your machine. Data is stored in local files and folders.
 
-**Current Version**: 2.0.5
+**Current Version**: 2.1.0
 
 ---
 
@@ -190,6 +190,9 @@ Settings includes:
 - Theme toggle (light/dark).
 - Image prompt model lists (base models and LoRAs).
 - System prompt model list (LLM models).
+- Whole App Backup (creates one ZIP with all app data).
+- Whole App Restore (restores from Whole App Backup ZIP and replaces current app data).
+- Whole app backup/restore operations show a blocking progress overlay while running.
 - Reset welcome cards for all views.
 - About card with current app version.
 
@@ -333,7 +336,8 @@ Asset folders:
 - `system-prompt-images/` system prompt profile images
 - `system-prompt-gallery/` system prompt gallery images
 
-To back up everything, copy or zip the full app data directory.
+For full-device backup and restore, use **Settings → Whole App Backup** and **Whole App Restore**.
+You can also manually copy or zip the full app data directory.
 
 ---
 
