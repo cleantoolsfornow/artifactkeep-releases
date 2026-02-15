@@ -38,7 +38,7 @@ ArtifactKeep is a local-first desktop application built with [Tauri](https://tau
 
 Everything runs on your machine. Data is stored in local files and folders.
 
-**Current Version**: 2.1.0
+**Current Version**: 2.1.1
 
 ---
 
@@ -82,6 +82,7 @@ ArtifactKeep is built with Tauri and targets macOS, Windows, and Linux.
 ## Navigation and Layout
 
 - **Sidebar**: Navigate between libraries, Help, and Settings.
+- **Sidebar Collapse**: Sidebar collapse state is remembered between sessions.
 - **Folder Subnav**: Library folders appear under sidebar entries for quick navigation.
 - **Sticky Headers**: Search, filters, and actions stay visible while scrolling.
 - **Folder Detail Headers**: In-folder mode shows folder name, item count, and folder-level actions.
@@ -98,6 +99,7 @@ Store and organize prompts for image generation.
 - Prompt editor supports positive prompt, negative prompt, notes, base models, LoRAs, and tags.
 - Live stats show characters, words, and an estimated token count.
 - Auto title generation uses a local title generator.
+- Edit modal includes a per-prompt **Export** action.
 - Favorites are pinned to the top.
 - Supports folders, drag and drop, search, filters, and card/list modes.
 - Filters include base models, LoRAs, tags, and "Has Negative Prompt".
@@ -113,6 +115,12 @@ Manage reusable system instructions and personas.
 
 - Prompt editor supports prompt text, notes, LLM models, and tags.
 - Supports profile image and multi-image gallery references.
+- System prompt image upload supports character-card PNG detection and import choices:
+  - Overwrite title + prompt
+  - Append prompt text
+  - Import image only
+  - Cancel
+- Edit modal includes a per-prompt **Export** action.
 - Favorites are pinned to the top.
 - Supports folders, drag and drop, search, filters, and card/list modes.
 - Filters include LLM models and tags.
@@ -120,6 +128,8 @@ Manage reusable system instructions and personas.
 - Import supports:
   - JSON templates and backup JSON.
   - Markdown files (`.md`, `.markdown`) as prompt bodies.
+  - Character card PNG files (`.png`).
+  - PNG-only bulk imports skip preflight and import valid cards directly.
 - Export supports backup JSON and portable files, with system-specific formatting:
   - Body only
   - Title + body
@@ -133,7 +143,7 @@ A gallery for imported images and extracted metadata.
 - Import modal can optionally create image prompts from imported image metadata.
 - Supports standard folders and linked folders.
 - Linked folders can scan for new PNG files and import only unseen files.
-- Search scopes: Everything, Prompt, Model, Filename.
+- Search scopes: Everything, All Prompts, Positive, Negative, Checkpoint, LoRA, Filename.
 - Filters include models, tool hints, and prompt-status flags.
 - Detail modal shows:
   - File info
@@ -171,6 +181,7 @@ Index and organize local model files without moving them.
 - Folder status tracks linked/scanning/unavailable states.
 - Missing entries are tracked and can be shown with a folder-level toggle.
 - Relink workflow supports smart matching to preserve existing metadata when paths change.
+- Relink workflow can optionally remove unmatched/missing entries after relinking.
 - Entry details include type, tags, notes, file size, modified date, and copy-path.
 - Supports folder/entry card and list modes, search, filtering, and bulk delete.
 - Deleting folders or entries removes index records only, not the original files on disk.
@@ -181,7 +192,7 @@ The Help page includes:
 
 - An **Open User Guide** button that loads this guide in-app.
 - A feedback email action (copy to clipboard).
-- A support link (Ko-fi).
+- A support link (Ko-fi) that opens in your default browser.
 
 ### Settings
 
@@ -227,6 +238,13 @@ Settings includes:
 ### Prompt Export and Import
 
 Prompt libraries use a guided export/import workflow.
+
+- **Where export can be launched**:
+  - Card/list item actions
+  - Bulk action toolbar
+  - Prompt edit modal (single prompt export)
+- **Single-selection export flow**:
+  - For one selected prompt, export skips multi-item organization/ZIP branching and goes straight to format choices.
 
 - **Backup JSON**:
   - Includes `version`, `exportedAt`, `type`, and `items`.
