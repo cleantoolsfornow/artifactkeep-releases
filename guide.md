@@ -38,7 +38,7 @@ ArtifactKeep is a local-first desktop application built with [Tauri](https://tau
 
 Everything runs on your machine. Data is stored in local files and folders.
 
-**Current Version**: 2.1.1
+**Current Version**: 2.1.2
 
 ---
 
